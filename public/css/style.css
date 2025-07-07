@@ -1,71 +1,75 @@
-/* Reset de base */
-* {
-  box-sizing: border-box;
+/* Base */
+body {
+  background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #e0f2f1 100%);
+  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
-  font-family: 'Arial';
 }
 
 /* Navbar */
 .navbar {
-  background-color: #ffffff; /* blanc */
-  box-shadow: 0 2px 6px rgba(124, 170, 91, 0.3); /* ombre verte douce */
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(124, 170, 91, 0.15);
   padding: 0.75rem 1.5rem;
-  position: sticky;
+
   top: 0;
-  z-index: 1000;
+  /* z-index: 1000; */
 }
 
-/* Conteneur */
 .navbar .container {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
+  align-items: center;
 }
 
-/* Logo */
 .navbar-brand {
   font-weight: 700;
-  font-size: 1.9rem;
+  font-size: 1.8rem;
   color: #5f8b46;
   text-decoration: none;
+  gap: 10px;
   display: flex;
   align-items: center;
 }
 
 .navbar-brand img {
-  height: 45px;
-  margin-right: 10px;
+  height: 40px;
+  margin-right: 5px;
 }
 
-/* Bouton toggler (mobile) */
+/* Menu */
+.navbar-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+
+
+/* Burger icon */
 .navbar-toggler {
   background: none;
   border: none;
   cursor: pointer;
   display: none;
-  outline: none;
+  padding: 0.5rem;
 }
 
 .navbar-toggler-icon {
   width: 25px;
-  height: 2.5px;
-  background-color: #5f8b46;
-  display: block;
+  height: 2px;
+  background-color: #141413;
   position: relative;
+  transition: all 0.3s ease-in-out;
 }
 
 .navbar-toggler-icon::before,
 .navbar-toggler-icon::after {
   content: "";
   width: 25px;
-  height: 2.5px;
-  background-color: #5f8b46;
+  height: 2px;
+  background-color: #161615;
   position: absolute;
-  left: 0;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
 }
 
 .navbar-toggler-icon::before {
@@ -79,8 +83,9 @@
 /* Menu */
 .navbar-collapse {
   display: flex;
-  flex-grow: 1;
+
   justify-content: center;
+  align-items: center;
 }
 
 .navbar-nav {
@@ -88,11 +93,13 @@
   display: flex;
   gap: 2rem;
   align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 /* Liens */
 .nav-link {
-  color: #5f8b46;
+  color: #141413;
   font-weight: 600;
   text-decoration: none;
   padding: 0.5rem 0.8rem;
@@ -100,51 +107,92 @@
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-.nav-link:hover,
+/* .nav-link:hover,
 .nav-link:focus {
   background-color: #7caa5b;
   color: #fff;
-  outline: none;
-}
+} */
 
-/* Boutons (connexion, déconnexion) */
+.Bouton 
 .nav-link.btn {
-  border: 2px solid #7caa5b;
+
   background-color: transparent;
   color: #7caa5b;
   font-weight: 700;
   padding: 0.4rem 1rem;
   border-radius: 8px;
   transition: all 0.3s ease;
-  cursor: pointer;
+} 
+
+
+/* home */
+.containerhome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    padding: 10px;
+    background: linear-gradient(135deg, #e8f5e9, #f1f8e9, #e0f2f1);
 }
 
-.nav-link.btn:hover,
-.nav-link.btn:focus {
-  background-color: #7caa5b;
-  color: #fff;
-  border-color: #5f8b46;
-  outline: none;
+.welcome-box {
+    background: #ffffffcc;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 850px;
+    width: 70%;
+    animation: fadeIn 1s ease-in;
 }
 
-/* Texte "Bonjour, user" */
-.navbar-nav .nav-item span.nav-link {
-  cursor: default;
-  color: #5f8b46;
-  font-weight: 600;
+.welcome-box h1 {
+    font-size: 2.5rem;
+    color: #2e7d32;
 }
 
-/* login */
+.highlight {
+    color: #43a047;
+    font-weight: bold;
+}
+
+.text {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #444;
+    text-align: justify;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* index client */
 
 
+.full-screen-center {
+  display: flex;
+  justify-content: center;   
+  align-items: center;       
+  height: 50vh;             
+  flex-direction: column; 
+  text-align: center;
+  padding: auto;
+}
+
+.icons-container {
+  flex-direction: row; 
+}
 
 
-
-
-
-
-
-/* Responsive - mobile */
+/* Responsive */
 @media (max-width: 992px) {
   .navbar-toggler {
     display: block;
@@ -155,6 +203,10 @@
     align-items: flex-start;
     width: 100%;
     display: none;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 10px;
   }
 
   .navbar-collapse.show {
@@ -164,7 +216,7 @@
   .navbar-nav {
     flex-direction: column;
     width: 100%;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .nav-link {

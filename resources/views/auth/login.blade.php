@@ -5,7 +5,6 @@
 
 
 
-
 @section('content')
 <div class="login-container">
     <div class="text-center mb-4">
@@ -35,7 +34,7 @@
             <label class="form-check-label" for="remember">Se souvenir de moi</label>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+        <button type="submit" class="btnlogin btn-primary w-100">Se connecter</button>
         <div class="mt-3 text-center">
             <a href="{{ route('register') }}">Pas encore inscrit ? Créez votre compte</a>
         </div>

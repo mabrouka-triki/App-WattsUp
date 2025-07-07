@@ -17,32 +17,29 @@ class AuthController extends Controller
     }
 
     // Traitement de la connexion
-    public function doLogin(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:4'
-        ]);
+ public function doLogin(Request $request)
+{
+    // Récupère uniquement l'email et le mot de passe depuis la requête
+    $credentials = $request->only('email', 'password');
 
-        $userEstValide = Auth::attempt([
-            'email' => $request->input('email'),
-            'password' => $request->input('password')
-        ]);
+    // Tente de connecter l'utilisateur avec les identifiants fournis
+    if (Auth::attempt($credentials, $request->remember)) {
+        // Connexion réussie
 
-        if ($userEstValide) {
-            $request->session()->regenerate();
-
-            if (auth()->user()->role === 'admin') {
-                return redirect()->intended(route('admin.index'));
-            } else {
-                return redirect()->intended(route('home'));
-            }
+        // Vérifie si l'utilisateur est un admin
+        if (auth()->user()->role === 'admin') {
+            // Redirige  le tableau de bord admin
+            return redirect()->intended(route('admin.index'));
+        } else {
+            // Redirige vers la page d'accueil  des   utilisateurs 
+            return redirect()->intended(route('Client.index'));
         }
-
-        return back()->withErrors([
-            'email' => 'L’email ou le mot de passe est invalide.'
-        ])->onlyInput('email');
     }
+
+  
+    return back()->with('error', 'Email ou mot de passe incorrect');
+}
+
 
     // Déconnexion
     public function logout()
@@ -52,7 +49,7 @@ class AuthController extends Controller
     }
 
     // Page d'inscription
-    public function register()
+  public function register()
     {
         return view('auth.register');
     }
@@ -85,6 +82,7 @@ class AuthController extends Controller
             'user_id' => $user->id, // bien transmis ici aussi
         ]);
         Auth::login($user);
-        return redirect()->route('home');
+       return redirect()->route('Client.index');
+
     }
 }

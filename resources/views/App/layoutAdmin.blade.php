@@ -1,4 +1,3 @@
-<!-- resources/views/layouts/app.blade.php -->
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -6,8 +5,9 @@
     <meta charset="UTF-8">
     <title>@yield('title', 'WattsUp')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+
 </head>
 
 <body>
@@ -27,25 +27,18 @@
             <div class="collapse navbar-collapse" id="main-navbar">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('') }}">Accueil</a>
+                        <a class="nav-link" href="{{ url('/home') }}">Accueil</a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/home') }}">modifier</a>
+                    </li>
                     @auth
+                        {{-- Exemple d'affichage pour l'admin --}}
                         @if(Auth::user()->role === 'admin')
-                            {{-- Contenu pour admin, si nécessaire --}}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/admin') }}">Admin Panel</a>
+                            </li>
                         @endif
-                    @endauth
-
-                    @guest
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-outline-primary me-2" href="{{ route('login') }}">Connexion</a>
-                        </li>
-                    @endguest
-
-                    @auth
-                        <li class="nav-item">
-                            <span class="nav-link">Bonjour, {{ Auth::user()->name }}</span>
-                        </li>
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -53,6 +46,11 @@
                             </form>
                         </li>
                     @endauth
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">Connexion</a>
+                        </li>
+                    @endguest
                 </ul>
             </div>
         </div>

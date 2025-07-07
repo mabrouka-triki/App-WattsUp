@@ -3,6 +3,15 @@
 @section('content')
 <div class="container mt-5" style="max-width: 600px;">
     <h2 class="mb-4">Inscription</h2>
+@if ($errors->any())
+    <div class="alert alert-danger">
+   
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+   
+    </div>
+@endif
 
     <form method="POST" action="{{ route('register') }}">
         @csrf
