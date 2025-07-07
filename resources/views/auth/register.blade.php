@@ -1,7 +1,7 @@
 @extends('App.layout')
-
+    <link href="{{ asset('css/register.css') }}" rel="stylesheet">
 @section('content')
-<div class="container mt-5" style="max-width: 600px;">
+<div class="container-register mt-5" style="max-width: 600px;">
     <h2 class="mb-4">Inscription</h2>
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -20,7 +20,10 @@
             <label for="email" class="form-label">Adresse Email</label>
             <input type="email" class="form-control" name="email" required value="{{ old('email') }}">
         </div>
-
+    <div class="mb-3">
+            <label for="name" class="form-label">Nom</label>
+            <input type="text" class="form-control" name="name" required value="{{ old('name') }}">
+        </div>
         <div class="mb-3">
             <label for="password" class="form-label">Mot de passe</label>
             <input type="password" class="form-control" name="password" required>

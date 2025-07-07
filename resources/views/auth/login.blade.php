@@ -38,6 +38,10 @@
         <div class="mt-3 text-center">
             <a href="{{ route('register') }}">Pas encore inscrit ? Créez votre compte</a>
         </div>
+
+        <div class="g-recaptcha mb-3 text-center" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
     </form>
 </div>
 
