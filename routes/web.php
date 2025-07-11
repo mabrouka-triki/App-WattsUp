@@ -3,7 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HabitationController;
-use App\Http\Controllers\AdminController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HabitationController::class, 'index'])->name('home');
@@ -24,7 +24,9 @@ Route::middleware('guest')->group(function () {
 
 // Routes accessibles uniquement aux utilisateurs authentifiés
 Route::middleware('auth')->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/Client', [ClientController::class, 'index'])->name('Client.index');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/client/habitation/{id}', [ClientController::class, 'showHabitation'])->name('client.habitation.show');
+    Route::get('/client/habitation/{id}/compteur/create', [ClientController::class, 'createCompteur'])->name('client.compteur.create');
+    Route::post('/client/habitation/{id}/compteur', [ClientController::class, 'storeCompteur'])->name('client.compteur.store');
 });

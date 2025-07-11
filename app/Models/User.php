@@ -21,7 +21,6 @@ class User extends Authenticatable
         'password',
         'date_creation_client',
         'type_client',
-        'role',
     ];
 
     /**
@@ -45,15 +44,5 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // Vérifie si l'utilisateur est admin
-    public function isAdmin(): bool
-    {
-        return $this->role === 'admin';
-    }
-
-    // Vérifie si l'utilisateur est client
-    public function isClient(): bool
-    {
-        return $this->role === 'client';
-    }
+  
 }

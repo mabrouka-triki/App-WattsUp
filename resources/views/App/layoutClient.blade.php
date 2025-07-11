@@ -6,11 +6,13 @@
     <title>@yield('title', 'WattsUp')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
     @yield('head') 
 </head>
 
 <body>
     <!-- NAVBAR -->
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container">
             <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ url('') }}">
@@ -29,12 +31,12 @@
                         <a class="nav-link" href="{{ url('/home') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/home') }}">Facture</a>
+                        <a class="nav-link" href="{{ url('/home') }}">AjouterFacture</a>
                     </li>
                     @auth
                         @if(Auth::user()->role === 'admin')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url('/admin') }}">Admin Panel</a>
+                                <a class="nav-link" href="{{ url('/admin') }}"> Details</a>
                             </li>
                         @endif
                         <li class="nav-item">

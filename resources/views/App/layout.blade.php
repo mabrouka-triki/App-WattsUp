@@ -1,12 +1,14 @@
 <!-- resources/views/layouts/app.blade.php -->
-<!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'WattsUp')</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' https://cdn.jsdelivr.net/ https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js;
+        style-src 'self' https://cdn.jsdelivr.net/ 'unsafe-inline';
+        font-src 'self' https://cdn.jsdelivr.net/;
+    ">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 

@@ -9,7 +9,7 @@
 @section('content')
 <div class="containerhome">
     <div class="welcome-box">
-        <h1 class="text-center mb-4">
+        <h1 class="text-center ">
             Bienvenue sur <span class="highlight">WattsUp</span> 
         </h1>
 

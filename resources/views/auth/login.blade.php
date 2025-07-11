@@ -29,18 +29,13 @@
             <input type="password" name="password" id="password" class="form-control" required>
         </div>
 
-        <div class="mb-3 form-check">
-            <input type="checkbox" name="remember" class="form-check-input" id="remember">
-            <label class="form-check-label" for="remember">Se souvenir de moi</label>
-        </div>
+   
 
         <button type="submit" class="btnlogin btn-primary w-100">Se connecter</button>
         <div class="mt-3 text-center">
             <a href="{{ route('register') }}">Pas encore inscrit ? Créez votre compte</a>
         </div>
 
-        <div class="g-recaptcha mb-3 text-center" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     </form>
 </div>

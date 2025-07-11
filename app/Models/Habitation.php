@@ -19,12 +19,12 @@ class Habitation extends Model
         'user_id',
     ];
 
-  
+  //relation appartient a un User
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
+//  habitation peut avoir plusieurs compteurs (électricité, gaz, eau)
     public function compteurs()
     {
         return $this->hasMany(Compteur::class, 'id_habitation', 'id_habitation');
