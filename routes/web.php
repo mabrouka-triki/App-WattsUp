@@ -26,7 +26,14 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/Client', [ClientController::class, 'index'])->name('Client.index');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/client/habitation/{id}', [ClientController::class, 'showHabitation'])->name('client.habitation.show');
-    Route::get('/client/habitation/{id}/compteur/create', [ClientController::class, 'createCompteur'])->name('client.compteur.create');
-    Route::post('/client/habitation/{id}/compteur', [ClientController::class, 'storeCompteur'])->name('client.compteur.store');
-});
+  // Détail d’une habitation + ses compteurs
+    Route::get('/client/habitations/{id}',    [ClientController::class, 'showHabitation'])->name('client.habitation.show');
+
+    // Formulaire d’ajout de compteur
+  // ✅ Création d’une habitation
+    Route::post('/client/habitations', [ClientController::class, 'store'])  ->name('Client.store');
+    Route::post('/client/habitations/{id}/compteurs',[ClientController::class, 'storeCompteur']  )->name('client.compteur.store');
+
+Route::delete('/client/habitation/{id}/delete', [ClientController::class, 'destroy']) ->name('client.habitation.delete');
+});   
+

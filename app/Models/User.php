@@ -20,7 +20,7 @@ class User extends Authenticatable
         'email',
         'password',
         'date_creation_client',
-        'type_client',
+       
     ];
 
     /**

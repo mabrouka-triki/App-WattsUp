@@ -18,10 +18,8 @@ return new class extends Migration
             
             // Champs spécifiques clients
             $table->date('date_creation_client')->nullable();
-            $table->string('type_client', 5)->nullable();
+          
 
-            // Role (admin, client, etc.)
-            $table->string('role')->default('client'); // 'admin', 'client', etc.
 
             $table->rememberToken();
             $table->timestamps();

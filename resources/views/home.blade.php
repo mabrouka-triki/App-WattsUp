@@ -1,7 +1,7 @@
 @extends('App.layout')
 
 @section('head')
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/register.css') }}" rel="stylesheet">
 @endsection
 
 @section('title', 'Bienvenue sur WattsUp')

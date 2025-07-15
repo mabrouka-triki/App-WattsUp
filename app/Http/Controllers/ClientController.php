@@ -68,4 +68,20 @@ class ClientController extends Controller
         return redirect()->route('client.habitation.show', $habitation->id_habitation)
                          ->with('success', 'Compteur ajouté avec succès.');
     }
+    // app/Http/Controllers/ClientController.php
+
+public function destroy($id)
+{
+    $habitation = Habitation::findOrFail($id);
+    
+    // (Optionnel) vérifier que l'utilisateur peut supprimer cette habitation
+    if ($habitation->user_id !== Auth::id()) {
+        abort(403, 'Accès interdit');
+    }
+
+    $habitation->delete();
+
+    return redirect()->back()->with('success', 'Habitation supprimée avec succès.');
+}
+
 }
