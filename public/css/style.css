@@ -51,8 +51,6 @@ body {
   gap: 1.5rem;
 }
 
-
-
 /* Burger icon */
 .navbar-toggler {
   background: none;
@@ -429,7 +427,7 @@ body {
 }
 
 .form-control {
-  width: 90%;
+  width: 80%;
   padding: 0.75rem;
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
@@ -455,9 +453,189 @@ body {
   transition: background-color 0.3s;
 }
 
-.btn-add:hover {
-  background-color: var(--primary-dark);
+
+/* Style pour le bouton + Compteur */
+a.add-compteur {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    margin-left: 0.5rem;
 }
+
+a.add-compteur:hover {
+    background-color: rgb(95, 139, 70); /* Bleu plus foncé au survol */
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+a.add-compteur:active {
+    transform: translateY(0);
+}
+
+/* Pour l'icône + si vous voulez l'améliorer */
+a.add-compteur::before {
+    content: "+";
+    margin-right: 0.3rem;
+    font-weight: bold;
+}
+
+/* Style spécifique pour l'intégration dans les items d'habitation */
+.habitation-item a.add-compteur {
+    margin-left: 0;
+    white-space: nowrap;
+}
+
+/* ============================================= */
+/*  Styles spécifiques pour la page de compteur  */
+/* ============================================= */
+
+.compteur-page {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.compteur-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-light);
+}
+
+.compteur-header h2 {
+
+    font-size: 1.8rem;
+    margin: 0;
+    font-weight: 100;
+}
+
+.compteur-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+ .form-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: #f9f9f9;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(124, 170, 91, 0.2);
+    outline: none;
+    background-color: white;
+}
+
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px 12px;
+}
+
+.compteur-description {
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    background-color: #f0f7ed;
+    border-left: 3px solid #7caa5b;
+    border-radius: 0 4px 4px 0;
+    color: #2d5939;
+    transition: all 0.3s ease;
+}
+
+/* Bouton de soumission */
+.btn-submit {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-submit:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124, 170, 91, 0.3);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+/* Icône pour le bouton */
+.btn-submit::before {
+    content: "+";
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Champs facultatifs */
+.optional-field {
+    position: relative;
+}
+
+.optional-field::after {
+    content: "(facultatif)";
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 0.8rem;
+    color: #6c757d;
+    font-style: italic;
+}
+
+
+/* Styles pour les erreurs de validation */
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
 
 /* Responsive */
 @media (max-width: 600px) {
@@ -469,5 +647,15 @@ body {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
-  }
+  }/* Responsive */
+@media (max-width: 768px) {
+    .compteur-page {
+        padding: 1.5rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
 }

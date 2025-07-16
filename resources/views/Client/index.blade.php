@@ -7,6 +7,21 @@
 @section('title', 'Mes habitations')
 
 @section('content')
+
+    
+    <!-- Ajout de la section pour les messages -->
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
 <div class="habitations-container">
     <h1 class="habitation-title">Bienvenue ! {{ Auth::user()->name }}</h1>
     
@@ -19,7 +34,7 @@
             @foreach ($habitations as $habitation)
                 <div class="habitation-item">
                     <div class="habitation-details">
-                        {{ $habitation->adresse_habitation }} ({{ $habitation->type_habitation }} - {{ $habitation->surfaces }} m², {{ $habitation->nb_occupants }} occupants)
+                    {{ $habitation->adresse_habitation }} ({{ $habitation->type_habitation }} - {{ $habitation->surfaces }} m², {{ $habitation->nb_occupants }} occupants)
                     </div>
                     <form method="POST" action="{{ route('client.habitation.delete', $habitation->id_habitation) }}">
                         @csrf
@@ -27,6 +42,11 @@
                         <button type="submit" class="btn-delete">Supprimer</button>
                     </form>
                 </div>
+                <a class href="{{ route('client.compteur.create', $habitation->id_habitation) }}"
+   class="btn-compteur">
+    + Compteur
+</a>
+
             @endforeach
         </div>
     @endif
@@ -67,6 +87,9 @@
             <div class="btn-add-container">
                 <button type="submit" class="btn-add">Ajouter</button>
             </div>
+            
+            <div>
+
         </form>
     </div>
 </div>

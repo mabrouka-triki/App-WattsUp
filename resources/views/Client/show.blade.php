@@ -1,5 +1,8 @@
-@extends('layouts.app')
+@extends('App.layoutClient')
 
+@section('head')
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+@endsection
 @section('content')
 <div class="container">
     <h1 class="mb-4">Habitation : {{ $habitation->adresse_habitation }}</h1>
