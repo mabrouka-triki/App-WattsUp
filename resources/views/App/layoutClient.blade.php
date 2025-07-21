@@ -4,26 +4,22 @@
     <meta charset="UTF-8">
     <title>@yield('title', 'WattsUp')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="
-    default-src 'self'; 
-    script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; 
-    style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; 
-    font-src 'self' https://cdn.jsdelivr.net data:; 
-    img-src 'self' data: https://cdn.jsdelivr.net;
-">
-<!-- CSS Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
-      crossorigin="anonymous">
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self'; 
+        script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; 
+        style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; 
+        font-src 'self' https://cdn.jsdelivr.net data:; 
+        img-src 'self' data: https://cdn.jsdelivr.net;
+    ">
+    
+    <!-- CSS Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" 
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" 
+          crossorigin="anonymous">
 
-<!-- JS Bootstrap -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
-        crossorigin="anonymous"></script>
-    {{-- Styles spécifiques à l’app --}}
+    {{-- Styles spécifiques à l'app --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-    {{-- Hook pour ajouter des <style> ou <link> depuis une vue enfant --}}
     @yield('head')
 </head>
 <body>
@@ -46,7 +42,14 @@
             <div class="collapse navbar-collapse" id="main-navbar">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="{{ url('/Client') }}">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url('') }}">Add facture</a></li>
+@if($compteur)
+   <li class="nav-item"> <a class="nav-link" href="{{ route('Client.gestionFacture', $compteur->id_compteur) }}">Suivre la Consommation </a></li>
+@else
+    <span>Aucun compteur trouvé</span>
+    
+@endif
+
+
 
                     @auth
                         @if(Auth::user()->role === 'admin')
@@ -75,11 +78,10 @@
 
     {{-- Bootstrap Bundle (JS + Popper) --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-PuCQgOthnYMp2WEJlU7s4ZAkD3e6yE/OuJIQv3CXhYYFkf9AM7EA2zdXnT4o0S0M"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
             crossorigin="anonymous"></script>
 
-    {{-- Pour injecter des scripts spécifiques depuis une vue enfant :
-         @push('scripts') ... @endpush --}}
+    {{-- Pour injecter des scripts spécifiques depuis une vue enfant --}}
     @stack('scripts')
 </body>
 </html>

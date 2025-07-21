@@ -9,10 +9,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('factures', function (Blueprint $table) {
-            $table->id('id_facture'); // auto-increment int primary key (éviter id_fournisseur comme clé pk)
+            $table->id('id_facture'); 
             $table->string('Fournisseur', 100);
             $table->date('Date_de_facture');
-            $table->decimal('Montant', 15, 2); // 50 digits c’est trop grand, 15,2 standard
+            $table->decimal('Montant', 15, 2); 
             $table->decimal('Consommation', 10, 2);
             $table->unsignedBigInteger('id_compteur'); // clé étrangère int
 

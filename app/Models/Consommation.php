@@ -12,7 +12,7 @@ class Consommation extends Model
     protected $primaryKey = 'id_consommation';
 
     protected $fillable = [
-        'date_relev_consommation',
+        'date_relev_consommation',    
         'valeur_conso',
         'id_compteur',
     ];

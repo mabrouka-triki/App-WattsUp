@@ -1,5 +1,29 @@
 <?php
 
+/**
+ * ──────────────────────────────────────────────────────────────────────────────
+ *  AuthController — Gestion complète de l’authentification (Laravel 10)
+ * ──────────────────────────────────────────────────────────────────────────────
+ *
+ *  Rôle principal :
+ *      • Affichage des vues de connexion et d’inscription.
+ *      • Validation robuste des données utilisateur.
+ *      • Connexion / déconnexion sécurisées (CSRF, fixation de session, etc.).
+ *
+ *  Bonnes pratiques mises en œuvre :
+ *      • Validation forte des mots de passe (classe  Illuminate\Validation\Rules\Password).
+ *      • Regeneration de l’ID de session après authentification pour contrer
+ *        les attaques de fixation de session.
+ *      • Invalidation & regeneration du token CSRF lors du logout.
+ *      • Règles `unique:users,email` pour empêcher les doublons.
+ *
+ *  @package  App\Http\Controllers
+ *  @author   Équipe WattsUp
+ *  @version  1.0.0
+ *  @license  MIT
+ *  @since    2025‑07‑16
+ * ──────────────────────────────────────────────────────────────────────────────
+ */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

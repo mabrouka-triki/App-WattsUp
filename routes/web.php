@@ -1,8 +1,8 @@
-<?php
-
+<?php 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HabitationController;
+use App\Http\Controllers\ConsommationController;
 use Illuminate\Support\Facades\Route;
 
 /* ---------- Accueil public ---------- */
@@ -30,7 +30,15 @@ Route::middleware('auth')->group(function () {
     Route::post  ('/client/habitations',                [ClientController::class, 'store'])        ->name('Client.store');
     Route::delete('/client/habitation/{id}/delete',     [ClientController::class, 'destroy'])      ->name('client.habitation.delete');
 
+  /* Compteurs */
     Route::get ('/client/habitations/{id}/compteurs/create', [ClientController::class, 'createCompteur'])->name('client.compteur.create');
     Route::post('/client/habitations/{id}/compteurs',        [ClientController::class, 'storeCompteur']) ->name('client.compteur.store');
-    /* Compteurs */
+  
+/*Consommation*/ 
+Route::get('/Client/gestionFacture/{compteur}', [ConsommationController::class, 'index'])
+    ->name('Client.gestionFacture');
+
+    Route::post('/consommation/{compteur}', [ConsommationController::class, 'store'])
+        ->name('consommation.store');
+
 });

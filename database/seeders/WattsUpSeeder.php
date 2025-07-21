@@ -19,7 +19,6 @@ class WattsUpSeeder extends Seeder
             'email' => 'admin@example.com',
             'password' => bcrypt('adminpassword'),
             'role' => 'admin',
-            // pas forcément besoin des champs client pour l'admin
             'date_creation_client' => null,
             'type_client' => null,
         ]);
@@ -43,7 +42,6 @@ class WattsUpSeeder extends Seeder
             'role' => 'client',
         ]);
 
-        // Habitations liées aux clients (pas à l'admin)
         $hab1 = Habitation::create([
             'adresse_habitation' => '123 Rue de Paris, Lyon',
             'type_habitation' => 'Appartement',
