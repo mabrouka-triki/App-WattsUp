@@ -2,103 +2,123 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\Habitation;
 use App\Models\Compteur;
 use App\Models\Consommation;
 use App\Models\Facture;
-use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class WattsUpSeeder extends Seeder
 {
     public function run(): void
     {
-        // Création d'un admin
-        $admin = User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('adminpassword'),
-            'role' => 'admin',
-            'date_creation_client' => null,
-            'type_client' => null,
-        ]);
+        // Créer les rôles
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $clientRole = Role::firstOrCreate(['name' => 'client']);
 
-        // Création des clients
-        $user1 = User::create([
-            'name' => 'Mabrouka tkt',
-            'email' => 'mabrouka@gmail.com',
-            'password' => bcrypt('password123'),
-            'date_creation_client' => now()->subYear(),
-            'type_client' => 'perso',
-            'role' => 'client',
-        ]);
+        // Créer l'admin
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin User',
+                'password' => bcrypt('adminpassword'),
+                'date_creation_client' => null,
+            ]
+        );
+        $admin->roles()->syncWithoutDetaching([$adminRole->id_role]);
 
-        $user2 = User::create([
-            'name' => 'Bob Martin',
-            'email' => 'bob@example.com',
-            'password' => bcrypt('password123'),
-            'date_creation_client' => now()->subMonths(6),
-            'type_client' => 'pros',
-            'role' => 'client',
-        ]);
+        // Créer Mabrouka
+        $mabrouka = User::firstOrCreate(
+            ['email' => 'mabrouka@gmail.com'],
+            [
+                'name' => 'Mabrouka tkt',
+                'password' => bcrypt('password123'),
+                'date_creation_client' => now()->subYear(),
+            ]
+        );
+        $mabrouka->roles()->syncWithoutDetaching([$clientRole->id_role]);
 
-        $hab1 = Habitation::create([
-            'adresse_habitation' => '123 Rue de Paris, Lyon',
-            'type_habitation' => 'Appartement',
-            'surfaces' => 85,
-            'nb_occupants' => 3,
-            'user_id' => $user1->id,
-        ]);
+        foreach ([
+            ['adresse' => '10 Rue Lafayette, Paris', 'type' => 'Appartement', 'surface' => 80, 'occupants' => 2],
+            ['adresse' => '120 Avenue République, Lille', 'type' => 'Maison', 'surface' => 120, 'occupants' => 4],
+        ] as $habData) {
+            $hab = Habitation::create([
+                'adresse_habitation' => $habData['adresse'],
+                'type_habitation' => $habData['type'],
+                'surfaces' => $habData['surface'],
+                'nb_occupants' => $habData['occupants'],
+                'user_id' => $mabrouka->id,
+            ]);
 
-        $hab2 = Habitation::create([
-            'adresse_habitation' => '45 Avenue Victor Hugo, Marseille',
-            'type_habitation' => 'Maison',
-            'surfaces' => 150,
-            'nb_occupants' => 5,
-            'user_id' => $user2->id,
-        ]);
+            $compteur = Compteur::create([
+                'Type_compteur' => 'Electricité',
+                'Reference_compteur' => strtoupper(uniqid('CMP')),
+                'id_habitation' => $hab->id_habitation,
+            ]);
 
-        // Compteurs
-        $compteur1 = Compteur::create([
-            'Type_compteur' => 'Electricité',
-            'Reference_compteur' => 'ELEC12345',
-            'id_habitation' => $hab1->id_habitation,
-        ]);
+            for ($i = 1; $i <= 3; $i++) {
+                Consommation::create([
+                    'date_relev_consommation' => now()->subDays($i * 10),
+                    'valeur_conso' => rand(100, 180),
+                    'id_compteur' => $compteur->id_compteur,
+                ]);
+            }
 
-        $compteur2 = Compteur::create([
-            'Type_compteur' => 'Gaz',
-            'Reference_compteur' => 'GAZ67890',
-            'id_habitation' => $hab2->id_habitation,
-        ]);
+            Facture::create([
+                'Fournisseur' => 'EDF',
+                'Date_de_facture' => now()->subDays(25),
+                'Montant' => rand(80, 130),
+                'Consommation' => rand(90, 160),
+                'id_compteur' => $compteur->id_compteur,
+            ]);
+        }
 
-        // Consommations
-        Consommation::create([
-            'date_relev_consommation' => now()->subDays(7),
-            'valeur_conso' => 150,
-            'id_compteur' => $compteur1->id_compteur,
-        ]);
+        // Autres clients avec plus de données
+        $faker = \Faker\Factory::create('fr_FR');
+        for ($u = 1; $u <= 10; $u++) {
+            $user = User::create([
+                'name' => $faker->name(),
+                'email' => $faker->unique()->safeEmail(),
+                'password' => bcrypt('password123'),
+                'date_creation_client' => now()->subDays(rand(30, 300)),
+            ]);
+            $user->roles()->syncWithoutDetaching([$clientRole->id_role]);
 
-        Consommation::create([
-            'date_relev_consommation' => now()->subDays(3),
-            'valeur_conso' => 75,
-            'id_compteur' => $compteur2->id_compteur,
-        ]);
+            // Chaque client a 1 à 3 habitations
+            for ($i = 1; $i <= rand(1, 3); $i++) {
+                $hab = Habitation::create([
+                    'adresse_habitation' => $faker->streetAddress() . ', ' . $faker->city(),
+                    'type_habitation' => $faker->randomElement(['Maison', 'Appartement']),
+                    'surfaces' => rand(60, 150),
+                    'nb_occupants' => rand(1, 6),
+                    'user_id' => $user->id,
+                ]);
 
-        // Factures
-        Facture::create([
-            'Fournisseur' => 'EDF',
-            'Date_de_facture' => now()->subMonth(),
-            'Montant' => 120.50,
-            'Consommation' => 150,
-            'id_compteur' => $compteur1->id_compteur,
-        ]);
+                $compteur = Compteur::create([
+                    'Type_compteur' => $faker->randomElement(['Electricité', 'Gaz']),
+                    'Reference_compteur' => strtoupper(uniqid('CMP')),
+                    'id_habitation' => $hab->id_habitation,
+                ]);
 
-        Facture::create([
-            'Fournisseur' => 'GRDF',
-            'Date_de_facture' => now()->subMonth(),
-            'Montant' => 80.75,
-            'Consommation' => 75,
-            'id_compteur' => $compteur2->id_compteur,
-        ]);
+                for ($j = 1; $j <= rand(2, 4); $j++) {
+                    Consommation::create([
+                        'date_relev_consommation' => now()->subDays($j * 15),
+                        'valeur_conso' => rand(70, 200),
+                        'id_compteur' => $compteur->id_compteur,
+                    ]);
+                }
+
+                Facture::create([
+                    'Fournisseur' => $faker->randomElement(['EDF', 'Engie', 'TotalEnergies']),
+                    'Date_de_facture' => now()->subDays(rand(10, 60)),
+                    'Montant' => rand(60, 200),
+                    'Consommation' => rand(90, 170),
+                    'id_compteur' => $compteur->id_compteur,
+                ]);
+            }
+        }
     }
 }

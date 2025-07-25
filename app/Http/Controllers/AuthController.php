@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rules\Password;
 use App\Models\User;
+use App\Models\Admin;
 
 class AuthController extends Controller
 {
@@ -48,46 +49,39 @@ class AuthController extends Controller
     }
 
  
+public function doLogin(Request $request)
+{
+    $request->validate([
+        'email'    => 'required|email',
+        'password' => 'required|string|min:6',
+    ]);
 
-    public function doLogin(Request $request)
-    {
-        // 1. Validation
-        $request->validate([
-            'email'                => 'required|email',
-            'password'             => 'required|string|min:6',
-        
-        ]);
+    if (Auth::attempt($request->only('email', 'password'))) {
+        $request->session()->regenerate();
 
-     
-      
-
-        // 3. Authentification
-        if (Auth::attempt($request->only('email', 'password'))) {
-            /**
-          
-             * Regénère l’ID de session pour empêcher la fixation de session
-             * et met à jour le jeton CSRF.
-             */
-            $request->session()->regenerate();
-
-            return redirect()->intended(route('Client.index'));
+        if (Auth::user()->hasRole('admin')) {
+            return redirect()->route('admin.index');
         }
 
-        return back()
-            ->with('error', 'Email ou mot de passe incorrect.')
-            ->withInput();
+        return redirect()->route('Client.index');
     }
+
+    return back()->with('error', 'Email ou mot de passe incorrect.')->withInput();
+}
+
 
     /* ---------- TRAITEMENT LOGOUT ---------- */
 
-    public function logout(Request $request)
-    {
-        Auth::logout();                       // 1. Déconnexion
-        $request->session()->invalidate();    // 2. Invalidation de la session
-        $request->session()->regenerateToken(); // 3. Nouveau token CSRF
 
+    // Déconnexion
+    public function logout()
+    {
+        Auth::logout();
         return redirect()->route('home');
     }
+
+
+
 
     /* ---------- TRAITEMENT REGISTER ---------- */
 
@@ -120,5 +114,6 @@ $validated = $request->validate([
         $request->session()->regenerate();
 
         return redirect()->route('Client.index');
+    
     }
-}
+    }

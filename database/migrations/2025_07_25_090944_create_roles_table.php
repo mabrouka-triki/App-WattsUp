@@ -9,22 +9,24 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-   public function up()
-{
-    Schema::create('admin', function (Blueprint $table) {
-        $table->id('id_admin');
-        $table->string('nom_admin', 50);
-        $table->string('email_admin', 50);
-        $table->string('pwd_admin', 50);
-    });
-}
+    public function up(): void
+    {
+        Schema::create('roles', function (Blueprint $table) {
+    $table->id('id_role');
+    $table->string('name')->unique();
+    $table->timestamps();
+          
 
+
+
+        });
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('admin');
+        Schema::dropIfExists('roles');
     }
 };
