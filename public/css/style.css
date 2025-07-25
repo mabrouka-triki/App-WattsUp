@@ -1,19 +1,26 @@
 /* Base */
+
 body {
   background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #e0f2f1 100%);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
-
+:root {
+  --primary-color: #7caa5b;
+  --primary-dark: #5f8b46;
+  --primary-light: #E4F3DF;
+  --text-dark: #333;
+  --border-color: #d1e7c8;
+  --radius: 8px;
+}
 /* Navbar */
 .navbar {
   background-color: #ffffff;
   box-shadow: 0 2px 8px rgba(124, 170, 91, 0.15);
-  padding: 0.75rem 1.5rem;
-
   top: 0;
-  /* z-index: 1000; */
+  
+
 }
 
 .navbar .container {
@@ -43,8 +50,6 @@ body {
   gap: 1.5rem;
 }
 
-
-
 /* Burger icon */
 .navbar-toggler {
   background: none;
@@ -72,9 +77,7 @@ body {
   transition: all 0.3s ease-in-out;
 }
 
-.navbar-toggler-icon::before {
-  top: -8px;
-}
+
 
 .navbar-toggler-icon::after {
   top: 8px;
@@ -107,11 +110,7 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* .nav-link:hover,
-.nav-link:focus {
-  background-color: #7caa5b;
-  color: #fff;
-} */
+
 
 .Bouton 
 .nav-link.btn {
@@ -191,36 +190,461 @@ body {
   flex-direction: row; 
 }
 
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.custom-table th,
+.custom-table td {
+    border: 1px solid #ccc;
+    padding: 0.75rem;
+    text-align: center;
+}
+
+.custom-table th {
+    background-color: #f2f2f2;
+}
+
+.action-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    margin-right: 0.25rem;
+    border-radius: 5px;
+}
+
+
+
+
+
+
+
+
+/* index */
+.habitations-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+/* Titres */
+.habitation-title {
+  color: var(--primary-dark);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.habitation-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: var(--primary-color);
+}
+
+/* Liste des habitations */
+.habitation-list {
+  margin: 2rem 0;
+}
+
+.habitation-item {
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 4px solid var(--primary-color);
+  transition: transform 0.2s;
+}
+
+.habitation-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(124, 170, 91, 0.15);
+}
+
+.habitation-info {
+  flex: 1;
+}
+
+.habitation-address {
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.25rem;
+}
+
+.habitation-details {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Boutons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.btn-delete {
+  background-color: #f8f9fa;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.btn-delete:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-icon {
+  margin-right: 0.5rem;
+}
+
+
+
+
+/* Titres */
+.habitation-title {
+  color: var(--primary-dark);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Liste des habitations */
+.habitation-list {
+  margin: 2rem 0;
+}
+
+.habitation-item {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #f9f9f9;
+  border-radius: var(--radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 4px solid var(--primary-color);
+}
+
+.habitation-details {
+  font-size: 1rem;
+}
+
+/* Bouton Supprimer */
+.btn-delete {
+  background: none;
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-delete:hover {
+  background: #e74c3c;
+  color: white;
+}
+
+/* Section Ajout */
+.add-habitation-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.section-title {
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Formulaire amélioré */
+.habitation-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-control {
+  width: 80%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-size: 1rem;
+}
+
+/* Bouton Ajouter centré */
+.btn-add-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.btn-add {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  width: 90%;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+
+/* Style pour le bouton + Compteur */
+a.add-compteur {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    margin-left: 0.5rem;
+}
+
+a.add-compteur:hover {
+    background-color: rgb(95, 139, 70); /* Bleu plus foncé au survol */
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+a.add-compteur:active {
+    transform: translateY(0);
+}
+
+/* Pour l'icône + si vous voulez l'améliorer */
+a.add-compteur::before {
+    content: "+";
+    margin-right: 0.3rem;
+    font-weight: bold;
+}
+
+/* Style spécifique pour l'intégration dans les items d'habitation */
+.habitation-item a.add-compteur {
+    margin-left: 0;
+    white-space: nowrap;
+}
+
+/* ============================================= */
+/*  Styles spécifiques pour la page de compteur  */
+/* ============================================= */
+
+.compteur-page {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.compteur-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-light);
+}
+
+.compteur-header h2 {
+
+    font-size: 1.8rem;
+    margin: 0;
+    font-weight: 100;
+}
+
+.compteur-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 1rem;
+}
+
+ .form-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background-color: #f9f9f9;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(124, 170, 91, 0.2);
+    outline: none;
+    background-color: white;
+}
+
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px 12px;
+}
+
+.compteur-description {
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    background-color: #f0f7ed;
+    border-left: 3px solid #7caa5b;
+    border-radius: 0 4px 4px 0;
+    color: #2d5939;
+    transition: all 0.3s ease;
+}
+
+/* Bouton de soumission */
+.btn-submit {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-submit:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124, 170, 91, 0.3);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+/* Icône pour le bouton */
+.btn-submit::before {
+    content: "+";
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Champs facultatifs */
+.optional-field {
+    position: relative;
+}
+
+.optional-field::after {
+    content: "(facultatif)";
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 0.8rem;
+    color: #6c757d;
+    font-style: italic;
+}
+
+
+/* Styles pour les erreurs de validation */
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
 
 /* Responsive */
-@media (max-width: 992px) {
-  .navbar-toggler {
-    display: block;
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
   }
-
-  .navbar-collapse {
+  
+  .habitation-item {
     flex-direction: column;
     align-items: flex-start;
-    width: 100%;
-    display: none;
-    background: #fff;
-    padding: 1rem;
-    border-radius: 10px;
-    margin-top: 10px;
-  }
+    gap: 0.5rem;
+  }/* Responsive */
+@media (max-width: 768px) {
+    .compteur-page {
+        padding: 1.5rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
 
-  .navbar-collapse.show {
-    display: flex;
-  }
-
-  .navbar-nav {
-    flex-direction: column;
-    width: 100%;
-    gap: 1rem;
-  }
-
-  .nav-link {
-    width: 100%;
-    padding-left: 0;
-  }
 }

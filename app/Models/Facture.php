@@ -24,3 +24,8 @@ class Facture extends Model
         return $this->belongsTo(Compteur::class, 'id_compteur', 'id_compteur');
     }
 }
+
+
+
+
+

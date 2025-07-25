@@ -1,7 +1,7 @@
 @extends('App.layout')
 
 @section('head')
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/register.css') }}" rel="stylesheet">
 @endsection
 
 @section('title', 'Bienvenue sur WattsUp')
@@ -9,7 +9,7 @@
 @section('content')
 <div class="containerhome">
     <div class="welcome-box">
-        <h1 class="text-center mb-4">
+        <h1 class="text-center ">
             Bienvenue sur <span class="highlight">WattsUp</span> 
         </h1>
 

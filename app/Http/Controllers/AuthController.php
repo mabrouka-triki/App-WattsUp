@@ -1,64 +1,76 @@
 <?php
 
+/**
+ * ──────────────────────────────────────────────────────────────────────────────
+ *  AuthController — Gestion complète de l’authentification (Laravel 10)
+ * ──────────────────────────────────────────────────────────────────────────────
+ *
+ *  Rôle principal :
+ *      • Affichage des vues de connexion et d’inscription.
+ *      • Validation robuste des données utilisateur.
+ *      • Connexion / déconnexion sécurisées (CSRF, fixation de session, etc.).
+ *
+ *  Bonnes pratiques mises en œuvre :
+ *      • Validation forte des mots de passe (classe  Illuminate\Validation\Rules\Password).
+ *      • Regeneration de l’ID de session après authentification pour contrer
+ *        les attaques de fixation de session.
+ *      • Invalidation & regeneration du token CSRF lors du logout.
+ *      • Règles `unique:users,email` pour empêcher les doublons.
+ *
+ *  @package  App\Http\Controllers
+ *  @author   Équipe WattsUp
+ *  @version  1.0.0
+ *  @license  MIT
+ *  @since    2025‑07‑16
+ * ──────────────────────────────────────────────────────────────────────────────
+ */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use App\Models\Habitation;
 use Illuminate\Support\Facades\Hash;
-
 use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\Rules\Password;
+use App\Models\User;
+use App\Models\Admin;
 
 class AuthController extends Controller
 {
-    // Page de connexion
+
+
     public function login()
     {
         return view('auth.login');
     }
 
-    // Traitement de la connexion
-
-
-public function doLogin(Request $request)
-{
-    // etape 1 : Validation du formulaire
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-        'g-recaptcha-response' => 'required',
-    ]);
-
-    // etape 2 : Vérification reCAPTCHA 
-    $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-        'secret' => env('RECAPTCHA_SECRET_KEY'),
-        'response' => $request->input('g-recaptcha-response'),
-        'remoteip' => $request->ip(),
-    ]);
-
-    if (!($response->json()['success'] ?? false)) {
-        return back()->with('error', 'Échec de vérification reCAPTCHA. Veuillez réessayer.')->withInput();
+    public function register()
+    {
+        return view('auth.register');
     }
 
-    //  etape 3 : Tentative de connexion
-    $credentials = $request->only('email', 'password');
+ 
+public function doLogin(Request $request)
+{
+    $request->validate([
+        'email'    => 'required|email',
+        'password' => 'required|string|min:6',
+    ]);
 
-    if (Auth::attempt($credentials, $request->boolean('remember'))) {
-        // Connexion réussie
+    if (Auth::attempt($request->only('email', 'password'))) {
+        $request->session()->regenerate();
 
-        // etape 4 : Redirection selon le rôle de l'utilisateur
-        $user = auth()->user();
-        if ($user->role === 'admin') {
-            return redirect()->intended(route('admin.index'));
+        if (Auth::user()->hasRole('admin')) {
+            return redirect()->route('admin.index');
         }
 
-        return redirect()->intended(route('Client.index')); // pour les clients
+        return redirect()->route('Client.index');
     }
 
     return back()->with('error', 'Email ou mot de passe incorrect.')->withInput();
 }
 
+
+    /* ---------- TRAITEMENT LOGOUT ---------- */
 
 
     // Déconnexion
@@ -68,44 +80,40 @@ public function doLogin(Request $request)
         return redirect()->route('home');
     }
 
-    // Page d'inscription
-  public function register()
-    {
-        return view('auth.register');
-    }
+
+
+
+    /* ---------- TRAITEMENT REGISTER ---------- */
 
     public function doRegister(Request $request)
     {
-      $request->validate([
+        // 1. Validation renforcée
+$validated = $request->validate([
     'name' => 'required|string|max:255',
     'email' => 'required|email|unique:users,email',
-    'password' => 'required|string|min:6',
-    'adresse_habitation' => 'required|string|max:255',
-    'type_habitation' => 'required|in:Appartement,Maison',
-    'surfaces' => 'required|numeric|min:1',
-    'nb_occupants' => 'required|integer|min:1',
+    'password' => [
+        'required',
+        'confirmed',
+        Password::min(12)
+            ->letters()
+            ->mixedCase()
+            ->numbers()
+            ->symbols()
+    ],
 ]);
-
-
+        // 2. Création de l’utilisateur
         $user = User::create([
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-             'name' => $request->name,
-
-            'role' => 'client',
-            'date_creation_client' => now(),
-            'type_client' => 'perso', // ou 'pros' si nécessaire
+            'name'                => $request->name,
+            'email'               => $request->email,
+            'password'            => Hash::make($request->password),
+            'date_creation_client'=> now(),
         ]);
 
-        Habitation::create([
-            'adresse_habitation' => $request->adresse_habitation,
-            'type_habitation' => $request->type_habitation,
-            'surfaces' => $request->surfaces,
-            'nb_occupants' => $request->nb_occupants,
-            'user_id' => $user->id, // bien transmis ici aussi
-        ]);
+        // 3. Connexion + nouvelle session
         Auth::login($user);
-       return redirect()->route('Client.index');
+        $request->session()->regenerate();
 
+        return redirect()->route('Client.index');
+    
     }
-}
+    }

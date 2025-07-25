@@ -20,8 +20,7 @@ class User extends Authenticatable
         'email',
         'password',
         'date_creation_client',
-        'type_client',
-        'role',
+       
     ];
 
     /**
@@ -44,16 +43,19 @@ class User extends Authenticatable
         'date_creation_client' => 'date',
         'password' => 'hashed',
     ];
+public function roles()
+{
+    // Cette méthode définit une relation "many-to-many" entre les utilisateurs et les rôles
+    // Elle utilise la table pivot 'user_roles' avec les clés étrangères personnalisées : 'id_user' et 'id_role'
+    return $this->belongsToMany(Role::class, 'user_roles', 'id_user', 'id_role');
+}
 
-    // Vérifie si l'utilisateur est admin
-    public function isAdmin(): bool
-    {
-        return $this->role === 'admin';
-    }
+public function hasRole($roleName)
+{
+    // Cette méthode vérifie si un utilisateur possède un rôle spécifique
+    // Elle est utile pour restreindre l'accès à certaines pages (ex : admin uniquement)
+    return $this->roles()->where('name', $roleName)->exists();
+}
 
-    // Vérifie si l'utilisateur est client
-    public function isClient(): bool
-    {
-        return $this->role === 'client';
-    }
+  
 }
