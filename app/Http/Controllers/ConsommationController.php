@@ -78,4 +78,18 @@ public function store(Request $request, Compteur $compteur)
             'tendance' => $total > 0 ? 'hausse' : ($total < 0 ? 'baisse' : 'stable'),
         ];
     }
+
+public function inlineUpdate(Request $request, Compteur $compteur, Consommation $consoId)
+{
+    $conso = Consommation::findOrFail($consoId);
+    $conso->update([
+        'valeur_conso' => $request->valeur_conso
+    ]);
+    
+    return back()->with('success', 'Consommation mise à jour!');
 }
+
+    
+}
+
+

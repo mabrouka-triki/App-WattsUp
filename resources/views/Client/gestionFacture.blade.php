@@ -115,6 +115,14 @@
                             -
                         @endif
                     </td>
+                    <td>
+    <button class="btn btn-sm btn-warning edit-btn" 
+            data-id="{{ $conso->id }}" 
+            data-value="{{ $conso->valeur_conso }}">
+        <i class="fas fa-edit"></i> Modifier
+    </button>
+</td>
+</td>
                 </tr>
                 @empty
                 {{-- Message si aucun relevé n'est encore enregistré --}}
@@ -124,6 +132,31 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+</div>
+<!-- Modal de modification -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="editForm" method="POST" class="modal-content">
+            @csrf
+            @method('PUT')
+            <div class="modal-header">
+                <h5 class="modal-title">Modifier la consommation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Nouvelle valeur (kWh)</label>
+                    <input type="number" step="0.01" name="valeur_conso" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -180,6 +213,89 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+// Gestion de la modification
+document.querySelectorAll('.edit-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const consoId = this.getAttribute('data-id');
+        const consoValue = this.getAttribute('data-value');
+        
+        const form = document.getElementById('editForm');
+        form.action = `/consommation/${consoId}`;
+        form.querySelector('input[name="valeur_conso"]').value = consoValue;
+        
+        const modal = new bootstrap.Modal(document.getElementById('editModal'));
+        modal.show();
+    });
+});
+
+// Soumission du formulaire
+document.getElementById('editForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    fetch(this.action, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+            valeur_conso: this.valeur_conso.value
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            alert('Erreur lors de la modification');
+        }
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.edit-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const row = btn.closest('tr');
+            row.querySelector('.conso-display').classList.add('d-none');
+            row.querySelector('.conso-edit').classList.remove('d-none');
+            btn.classList.add('d-none');
+            row.querySelector('.save-btn').classList.remove('d-none');
+        });
+    });
+
+    document.querySelectorAll('.save-btn').forEach(function (btn) {
+        btn.addEventListener('click', async function () {
+            const row = btn.closest('tr');
+            const input = row.querySelector('.conso-edit');
+            const valeur = input.value;
+            const consoId = btn.dataset.id;
+            const compteurId = btn.dataset.compteur;
+
+            const url = `/consommation/${compteurId}/${consoId}`;
+            console.log("URL:", url);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({ valeur_conso: valeur })
+                });
+
+                if (!response.ok) throw new Error("Erreur de mise à jour");
+
+                row.querySelector('.conso-display').textContent = parseFloat(valeur).toFixed(2);
+                row.querySelector('.conso-display').classList.remove('d-none');
+                input.classList.add('d-none');
+                btn.classList.add('d-none');
+                row.querySelector('.edit-btn').classList.remove('d-none');
+            } catch (err) {
+                alert("Erreur : " + err.message);
+            }
+        });
+    });
+});
+
 </script>
 @endpush
 @endsection
