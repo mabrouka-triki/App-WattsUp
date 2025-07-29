@@ -56,6 +56,10 @@ Route::middleware('auth')->group(function () {
     // Consommation
     Route::get ('/client/gestionFacture/{compteur}', [ConsommationController::class, 'index'])->name('Client.gestionFacture');
     Route::post('/consommation/{compteur}',          [ConsommationController::class, 'store'])->name('consommation.store');
+Route::get ('/consommation/{compteur}/{conso}/edit', [ConsommationController::class, 'edit'])->name('consommation.edit');
+Route::put('/consommation/{compteur}/{conso}',       [ConsommationController::class, 'update'])->name('consommation.update');
+
+
 });
 
 /* ============================================================================

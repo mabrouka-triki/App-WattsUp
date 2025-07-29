@@ -12,3 +12,4 @@
         Bonjour client {{ Auth::user()->name }}
     @endif
 @endauth
+
