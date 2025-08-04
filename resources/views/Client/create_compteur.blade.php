@@ -79,6 +79,7 @@
         <button type="submit" class="btn-submit">
             Ajouter le compteur
         </button>
+        
     </form>
 </div>
 @endsection

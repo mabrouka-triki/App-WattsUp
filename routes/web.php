@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
     // Déconnexion client
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+
+    
     // Habitations
     Route::get   ('/client/habitations/{id}',       [ClientController::class, 'showHabitation'])->name('client.habitation.show');
     Route::post  ('/client/habitations',            [ClientController::class, 'store'])->name('Client.store');
@@ -54,10 +56,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/client/habitations/{id}/compteurs',        [ClientController::class, 'storeCompteur'])->name('client.compteur.store');
 
     // Consommation
-    Route::get ('/client/gestionFacture/{compteur}', [ConsommationController::class, 'index'])->name('Client.gestionFacture');
-    Route::post('/consommation/{compteur}',          [ConsommationController::class, 'store'])->name('consommation.store');
+Route::get ('/client/gestionFacture/{compteur}', [ConsommationController::class, 'index'])->name('Client.gestionFacture');
+Route::post('/consommation/{compteur}',          [ConsommationController::class, 'store'])->name('consommation.store');
 Route::get ('/consommation/{compteur}/{conso}/edit', [ConsommationController::class, 'edit'])->name('consommation.edit');
 Route::put('/consommation/{compteur}/{conso}',       [ConsommationController::class, 'update'])->name('consommation.update');
+
+
+// Routes pour modifier une habitation
+Route::get('/client/habitation/{id}/edit', [ClientController::class, 'edit'])->name('client.habitation.edit');
+Route::put('/client/habitation/{id}', [ClientController::class, 'update'])->name('client.habitation.update');
+
 
 
 });

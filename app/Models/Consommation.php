@@ -11,12 +11,15 @@ class Consommation extends Model
 
     protected $primaryKey = 'id_consommation';
 
+  
     protected $fillable = [
         'date_relev_consommation',    
         'valeur_conso',
         'id_compteur',
     ];
 
+    //une consommation appartient à un compteur.
+    // Cela permet de faire $consommation->compteur pour accéder au compteur lié.
     public function compteur()
     {
         return $this->belongsTo(Compteur::class, 'id_compteur', 'id_compteur');

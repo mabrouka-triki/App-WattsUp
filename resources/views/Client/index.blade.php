@@ -9,19 +9,7 @@
 
 @section('content')
 
-    {{-- Affichage conditionnel des messages flash (succès ou erreur) après une action utilisateur.
-         Ces messages proviennent généralement du contrôleur, pour améliorer l'expérience utilisateur. --}}
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-    
-    @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
+   
 
 <div class="habitations-container">
     
@@ -49,15 +37,20 @@
                     <form method="POST" action="{{ route('client.habitation.delete', $habitation->id_habitation) }}">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn-delete">Supprimer</button>
+                        <button type="submit" class="btn btn-primary">Supprimer</button>
                     </form>
                 </div>
 
                 {{-- Lien permettant d'ajouter un compteur à cette habitation (relation 1-n) --}}
+                <div>
                 <a href="{{ route('client.compteur.create', $habitation->id_habitation) }}"
                    class="btn-compteur">
-                   + Compteur
+                   + Compteur
                 </a>
+                </div>
+<div>
+        <a href="{{ route('client.habitation.edit', $habitation->id_habitation) }}" class="btn btn-secondly">
+    Modifier</a>
             @endforeach
         </div>
     @endif
@@ -97,12 +90,13 @@
                     <input type="number" name="nb_occupants" class="form-control" required min="1">
                 </div>
             </div>
-            
+            <div>
+       
+
             {{-- Bouton pour valider et soumettre le formulaire d’ajout --}}
             <div class="btn-add-container">
                 <button type="submit" class="btn-add">Ajouter</button>
             </div>
-
         </form>
     </div>
 </div>
