@@ -29,7 +29,6 @@
             </ul>
         </div>
     </nav>
-
     <main class="container py-4">
         @yield('content')
     </main>

@@ -212,6 +212,39 @@ class ClientController extends Controller
             ->with('success', 'Compteur ajouté avec succès.');
     }
 
+// ────────────────────────────────────────────────────────────────────────
+// 7) FORMULAIRE DE MODIFICATION D’UNE HABITATION
+// ────────────────────────────────────────────────────────────────────────
+
+public function edit($id)
+{
+    $habitation = Habitation::where('user_id', Auth::id())->findOrFail($id);
+
+    return view('Client.edit', compact('habitation'));
+}
+
+// ────────────────────────────────────────────────────────────────────────
+// 8) MISE À JOUR D’UNE HABITATION
+// ────────────────────────────────────────────────────────────────────────
+
+public function update(Request $request, $id)
+{
+    $habitation = Habitation::where('user_id', Auth::id())->findOrFail($id);
+
+    $validated = $request->validate([
+        'adresse_habitation' => 'required|string|max:255',
+        'type_habitation'    => 'required|string|in:Appartement,Maison',
+        'surfaces'           => 'required|integer|min:1',
+        'nb_occupants'       => 'required|integer|min:1',
+    ]);
+
+    $habitation->update($validated);
+
+    return redirect()
+        ->route('Client.index')
+        ->with('success', 'Habitation mise à jour avec succès.');
+}
+
     // ────────────────────────────────────────────────────────────────────────
     // 6) SUPPRESSION D’UNE HABITATION
     // ────────────────────────────────────────────────────────────────────────
@@ -223,6 +256,7 @@ class ClientController extends Controller
      * @param  int $id  ID de l’habitation
      * @return \Illuminate\Http\RedirectResponse
      */
+
     public function destroy($id)
     {
         $habitation = Habitation::findOrFail($id); // 404 si l’ID n’existe pas

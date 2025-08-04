@@ -52,7 +52,7 @@ public function roles()
 
 public function hasRole($roleName)
 {
-    // Cette méthode vérifie si un utilisateur possède un rôle spécifique
+    /// si un utilisateur possède un rôle spécifique
     // Elle est utile pour restreindre l'accès à certaines pages (ex : admin uniquement)
     return $this->roles()->where('name', $roleName)->exists();
 }

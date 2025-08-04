@@ -11,12 +11,12 @@
  
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ url('/') }}">
+          <div class="container">
+            <!-- Logo et Brand -->
+   <a class="navbar-brand" href="{{ url('/') }}">
                 <img src="{{ asset('assets/WattsUp.svg') }}"
                      alt="WattsUp Logo"
-                     style="height: 50px; margin-right: 10px;">
-                WattsUp
+                     style="height: 50px"> WattsUp
             </a>
 
             <div class="collapse navbar-collapse">

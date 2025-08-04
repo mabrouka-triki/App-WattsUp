@@ -9,7 +9,7 @@
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     text-align: center;
  
-    margin: 20px auto 30px auto; /* espace en haut ET en bas */
+    margin: 20px auto 30px auto; 
     animation: fadeIn 0.6s ease-out;
 }
 
@@ -196,7 +196,9 @@ h2 {
     .form-check-label {
         font-size: 0.85rem;
     }
+    
 }
+
 
 }
 

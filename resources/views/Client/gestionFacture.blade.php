@@ -8,15 +8,7 @@
 @section('title', 'Suivi de consommation')
 
 @section('content')
-<div class="container">
-    {{-- Affichage des messages de retour (succès ou erreur) après une action utilisateur --}}
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
 
-    @if(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
 
     {{-- Titre principal indiquant le type de compteur suivi --}}
     <h2>Suivi de consommation - {{ $compteur->Type_compteur }}</h2>
@@ -119,8 +111,14 @@
     <button class="btn btn-sm btn-warning edit-btn" 
             data-id="{{ $conso->id }}" 
             data-value="{{ $conso->valeur_conso }}">
-        <i class="fas fa-edit"></i> Modifier
+        <i></i> Modifier
     </button>
+
+
+      {{-- Bouton de soumission du formulaire --}}
+        <button type="submit" class="btn btn-primary">
+         Supprimer
+        </button>
 </td>
 </td>
                 </tr>

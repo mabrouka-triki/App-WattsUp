@@ -1,5 +1,5 @@
 @extends('App.layout')
-<link href="{{ asset('css/register.css') }}" rel="stylesheet">
+<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
 @section('content')
 <div class="container-register mt-5" style="max-width: 600px;">
